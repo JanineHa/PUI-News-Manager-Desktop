@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
+   <children>
+      <Label text="News Online" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <VBox layoutX="446.0" layoutY="52.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <Label text="Available Articles:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <ListView prefHeight="120.0" prefWidth="180.0" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="52.0" prefHeight="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Label text="Categorie:">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox prefWidth="150.0" />
+         </children>
+      </HBox>
+      <Pane layoutX="35.0" layoutY="278.0" prefHeight="130.0" prefWidth="350.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="290.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="428.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="35.0">
+         <children>
+            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+      <VBox layoutX="446.0" layoutY="270.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Label text="Options:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <ListView prefHeight="130.0" prefWidth="180.0" />
+         </children>
+      </VBox>
+      <ImageView fitHeight="130.0" fitWidth="150.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="140.0" />
+   </children>
 </AnchorPane>

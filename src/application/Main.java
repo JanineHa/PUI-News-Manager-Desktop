@@ -50,7 +50,7 @@ public class Main extends Application {
 		
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.initStyle(StageStyle.UNDECORATED);
+			primaryStage.initStyle(StageStyle.UTILITY);
 			primaryStage.setScene(scene);
 			root.setOnMousePressed(new EventHandler<MouseEvent>() {
 	            @Override
