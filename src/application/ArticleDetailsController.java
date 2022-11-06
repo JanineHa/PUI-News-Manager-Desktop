@@ -4,11 +4,24 @@
 package application;
 
 
+import java.io.IOException;
+
 import application.news.Article;
 import application.news.User;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 /**
- * @author ÁngelLucas
+ * @author AngelLucas
  *
  */
 public class ArticleDetailsController {
@@ -22,7 +35,28 @@ public class ArticleDetailsController {
 	     * Article to be shown
 	     */
 	    private Article article;
+	    
+	    private Boolean showBody;
+	    
+	    @FXML
+		private Label username;
+	    @FXML
+	    private Label title;
+	    @FXML
+	    private Label subtitle;
+	    @FXML
+	    private Label category;
+	    @FXML
+	    private ImageView image;
+	    @FXML
+	    private TextArea text;
+	    @FXML
+	    private Button btnText;
 
+	    @FXML
+		void initialize() { 
+			this.showBody = false;
+	    }
 	    
 
 		/**
@@ -33,7 +67,7 @@ public class ArticleDetailsController {
 			if (usr == null) {
 				return; //Not logged user
 			}
-			//TODO Update UI information
+			this.username.setText(usr.getLogin());
 		}
 
 		/**
@@ -41,6 +75,38 @@ public class ArticleDetailsController {
 		 */
 		void setArticle(Article article) {
 			this.article = article;
-			//TODO complete this method
+			
+			if (article.getImageData() != null) {
+				this.image.setImage(article.getImageData());
+			}
+			this.title.setText("Title: " + article.getTitle());
+			this.subtitle.setText("Subtitle: " + article.getSubtitle());
+			this.category.setText("Category: " + article.getCategory());
+			this.text.setText(article.getAbstractText());
+		}
+		
+		@FXML
+		public void switchText (ActionEvent event) {
+			if (!showBody) {
+				this.showBody = true;
+				this.text.setText(this.article.getBodyText());
+				this.btnText.setText("show abstract");
+				return;
+			}
+			this.showBody = false;
+			this.text.setText(this.article.getAbstractText());
+			this.btnText.setText("show body");
+		}
+		
+		@FXML
+		public void goBack (ActionEvent event) {
+	    	try {
+				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
+				Scene articleScene = new Scene(loader.load());
+				primaryStage.setScene(articleScene);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 }

@@ -45,7 +45,7 @@
       <Pane layoutX="35.0" layoutY="278.0" prefHeight="130.0" prefWidth="350.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="290.0" />
       <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="428.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="35.0">
          <children>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more">
+            <JFXButton fx:id="btnDetails" buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more" onAction="#openDetails">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

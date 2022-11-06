@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="410.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleDetailsController">
    <children>
-      <Label text="News Online" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <Label layoutX="11.0" layoutY="10.0" text="News Online for: " AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <Label fx:id="username" layoutX="103.0" layoutY="6.0" prefHeight="26.0" prefWidth="116.0" />
+      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
       <VBox layoutX="421.0" layoutY="14.0" prefHeight="100.0" prefWidth="330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Title:" />
+                  <Label fx:id="title" wrapText="true"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Subtitle:" />
+                  <Label fx:id="subtitle"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Categorie:" />
+                  <Label fx:id="category" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Pane layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <JFXTextArea fx:id="text" editable="false" layoutX="27.0" layoutY="156.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="back">
+            <JFXButton buttonType="RAISED" onAction="#goBack" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="back">
                <HBox.margin>
                   <Insets right="150.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="abstract/body">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="show body">
                <HBox.margin>
                   <Insets left="150.0" />
                </HBox.margin>
