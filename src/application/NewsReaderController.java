@@ -74,7 +74,7 @@ public class NewsReaderController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
 			Scene articleScene = new Scene(loader.load());
 			ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
-			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
+			Article article = newsReaderModel.getFullArticle(1);
 			controller.setArticle(article);
 			controller.setUsr(usr);
 			primaryStage.setScene(articleScene);
