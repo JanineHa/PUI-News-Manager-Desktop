@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import application.news.Article;
 import application.news.Categories;
+import application.news.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,13 +91,13 @@ public class Main extends Application {
 			Properties prop = buildServerProperties();
 			ConnectionManager connection = new ConnectionManager(prop);
 			//Connecting as public (anonymous) for your group
-			connection.setAnonymousAPIKey(""/*Put your group API Key here*/);
-			//Login whitout login form:
-			//	connection.login("Reader2", "reader2"); //User: Reader2 and password "reader2" 
-			//    User user = new User ("Reader2", 
-			//	Integer.parseInt(connection.getIdUser()));
-			//	controller.setUsr(user);
-			controller.setConnectionManager(connection);		
+			connection.setAnonymousAPIKey("ANON07_340"/*Put your group API Key here*/);
+			//Login without login form:
+			connection.login("DEV_TEAM_07", "123707@3"); //User: DEV_TEAM_07 and password "123707@3" 
+			User user = new User ("DEV_TEAM_07", 
+			Integer.parseInt(connection.getIdUser()));
+			controller.setUsr(user);
+			controller.setConnectionManager(connection);	
 
 			//end code for main window reader
 

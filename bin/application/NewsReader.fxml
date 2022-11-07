@@ -7,10 +7,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
    <children>
@@ -19,7 +22,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <VBox layoutX="446.0" layoutY="52.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+      <VBox layoutX="446.0" layoutY="52.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="65.0">
          <children>
             <Label text="Available Articles:">
                <font>
@@ -29,7 +32,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <ListView prefHeight="120.0" prefWidth="180.0" />
+            <ListView fx:id="articleListView" prefHeight="120.0" prefWidth="300.0" />
          </children>
       </VBox>
       <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="52.0" prefHeight="50.0" AnchorPane.topAnchor="50.0">
@@ -39,20 +42,20 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="categorieList" onAction="#filterCategorie" prefWidth="150.0" />
          </children>
       </HBox>
-      <Pane layoutX="35.0" layoutY="278.0" prefHeight="130.0" prefWidth="350.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="290.0" />
+      <WebView fx:id="articleAbstract" layoutX="35.0" layoutY="289.0" prefHeight="130.0" prefWidth="300.0" />
       <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="428.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="35.0">
          <children>
-            <JFXButton fx:id="btnDetails" buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more" onAction="#openDetails">
+            <JFXButton fx:id="btnDetails" buttonType="RAISED" onAction="#onOpenDetails" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </JFXButton>
          </children>
       </HBox>
-      <VBox layoutX="446.0" layoutY="270.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="10.0">
+      <VBox layoutX="401.0" layoutY="280.0" prefWidth="227.0" AnchorPane.bottomAnchor="51.0" AnchorPane.rightAnchor="10.0">
          <children>
             <Label text="Options:">
                <font>
@@ -62,9 +65,46 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <ListView prefHeight="130.0" prefWidth="180.0" />
+            <JFXButton fx:id="btnLogin"  buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Login">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="190.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="190.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton fx:id="btnLoad"   buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Load From File" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDelete"  onAction="#onDelete" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="btnEdit" onAction="#onEdit" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Edit" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btnNew" onAction="#onNew" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="New">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <JFXButton fx:id="btnExit" onAction="#onExit" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Exit" />
          </children>
       </VBox>
-      <ImageView fitHeight="130.0" fitWidth="150.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="140.0" />
+      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="170.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="130.0" />
    </children>
 </AnchorPane>
