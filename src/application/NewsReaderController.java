@@ -85,7 +85,7 @@ public class NewsReaderController {
 		articleListView.getSelectionModel().selectFirst();
 		
 
-    	if(this.usr != null) {
+    	if(this.usr == null) {
     		this.btnNew.setVisible(false);
     		this.btnDelete.setVisible(false);
     		this.btnEdit.setVisible(false);
@@ -102,8 +102,7 @@ public class NewsReaderController {
 	@FXML
 	private void filterCategorie(ActionEvent event) {
 		String filterText = this.categorieList.getValue().toString();
-		System.out.print(filterText);
-
+	
 		if (filterText == "All") {
 			filteredArticleList.setPredicate(article -> true);
 
@@ -193,11 +192,21 @@ public class NewsReaderController {
 	}
 	@FXML
 	void onNew(ActionEvent event) {
-		
+		try {
+			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			Scene articleScene = new Scene(loader.load());
+			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setUsr(usr);
+			primaryStage.setScene(articleScene);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@FXML
 	void onDelete(ActionEvent event) {
-		newsReaderModel.deleteArticle(this.Article);
+		//please try carefully and only if creating new article is working
+		//newsReaderModel.deleteArticle(this.Article);
 		getData();
 	}
 	@FXML
