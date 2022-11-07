@@ -50,6 +50,14 @@ public class NewsReaderController {
 	@FXML
 	private Button btnDetails;
 	@FXML
+	private Button btnDelete;
+	@FXML
+	private Button btnEdit;
+	@FXML
+	private Button btnNew;
+	@FXML
+	private Button btnLoad;
+	@FXML
 	private ImageView imageView;
 	@FXML
 	private WebView articleAbstract;
@@ -75,6 +83,19 @@ public class NewsReaderController {
 		filteredArticleList = new FilteredList<>(newsReaderModel.getArticles(), article -> true);
 		this.articleListView.setItems(filteredArticleList);
 		articleListView.getSelectionModel().selectFirst();
+		
+
+    	if(this.usr != null) {
+    		this.btnNew.setVisible(false);
+    		this.btnDelete.setVisible(false);
+    		this.btnEdit.setVisible(false);
+    		this.btnLoad.setVisible(false);
+    	}else {
+    		this.btnNew.setVisible(true);
+    		this.btnDelete.setVisible(true);
+    		this.btnEdit.setVisible(true);
+    		this.btnLoad.setVisible(true);
+    	}
 
 	}
 
