@@ -39,7 +39,7 @@ import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
 /**
- * @author ÁngelLucas
+ * @author Ã�ngelLucas
  *
  */
 public class ArticleEditController {
@@ -57,7 +57,8 @@ public class ArticleEditController {
 	 */
 	private User usr;
 	//TODO add attributes and methods as needed
-
+	@FXML
+	private Label username;
 
 
 	@FXML
@@ -126,7 +127,10 @@ public class ArticleEditController {
 	void setUsr(User usr) {
 		this.usr = usr;
 		//TODO Update UI and controls 
-		
+		if (usr == null) {
+			return; //Not logged user
+		}
+		this.username.setText(usr.getLogin());
 	}
 
 	/**

@@ -4,14 +4,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="loginWindow" prefHeight="294.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
    <children>
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="46.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
       <Pane layoutX="7.0" layoutY="66.0" prefHeight="200.0" prefWidth="390.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
          <children>
             <VBox alignment="CENTER" layoutX="20.0" layoutY="19.0">
@@ -26,7 +34,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField prefWidth="230.0" promptText="UserId">
+                        <TextField fx:id="usernameField" prefWidth="230.0" promptText="UserId">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -46,7 +54,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField prefWidth="230.0" promptText="UserId">
+                        <TextField fx:id="passwordField" prefWidth="230.0" promptText="Password">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -58,12 +66,12 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="300.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="login">
+                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="login">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="cancel">
+                        <JFXButton fx:id="btnCancel" buttonType="RAISED" onAction="#onCancel" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="cancel">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -72,7 +80,13 @@
                   </HBox>
                </children>
             </VBox>
+            <Text fx:id="loginError" fill="#c41a0b" layoutX="143.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="228.21876072883606" />
          </children>
       </Pane>
+      <ImageView fitHeight="23.0" fitWidth="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@../../resources/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

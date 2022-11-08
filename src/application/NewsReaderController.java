@@ -16,11 +16,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import serverConection.ConnectionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,7 +40,6 @@ public class NewsReaderController {
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 	private User usr;
 	Article Article;
-
 
 	@FXML
 	private ListView<Article> articleListView;
@@ -61,6 +63,8 @@ public class NewsReaderController {
 	private ImageView imageView;
 	@FXML
 	private WebView articleAbstract;
+	@FXML
+	private Label username;
 
 	// TODO add attributes and methods as needed
 
@@ -83,26 +87,25 @@ public class NewsReaderController {
 		filteredArticleList = new FilteredList<>(newsReaderModel.getArticles(), article -> true);
 		this.articleListView.setItems(filteredArticleList);
 		articleListView.getSelectionModel().selectFirst();
-		
 
-    	if(this.usr == null) {
-    		this.btnNew.setVisible(false);
-    		this.btnDelete.setVisible(false);
-    		this.btnEdit.setVisible(false);
-    		this.btnLoad.setVisible(false);
-    	}else {
-    		this.btnNew.setVisible(true);
-    		this.btnDelete.setVisible(true);
-    		this.btnEdit.setVisible(true);
-    		this.btnLoad.setVisible(true);
-    	}
+		if (this.usr == null) {
+			this.btnNew.setVisible(false);
+			this.btnDelete.setVisible(false);
+			this.btnEdit.setVisible(false);
+			this.btnLoad.setVisible(false);
+		} else {
+			this.btnNew.setVisible(true);
+			this.btnDelete.setVisible(true);
+			this.btnEdit.setVisible(true);
+			this.btnLoad.setVisible(true);
+		}
 
 	}
 
 	@FXML
 	private void filterCategorie(ActionEvent event) {
 		String filterText = this.categorieList.getValue().toString();
-	
+
 		if (filterText == "All") {
 			filteredArticleList.setPredicate(article -> true);
 
@@ -136,6 +139,10 @@ public class NewsReaderController {
 		// Reload articles
 		this.getData();
 		// TODO Update UI
+		if (usr == null) {
+			return; // Not logged user
+		}
+		this.username.setText(usr.getLogin());
 	}
 
 	@FXML
@@ -150,7 +157,7 @@ public class NewsReaderController {
 					articleAbstract.getEngine().loadContent(Article.getAbstractText());
 					imageView.setImage(Article.getImageData());
 					Article.setIdArticle(newValue.getIdArticle());
-					
+
 				} else { // Nothing selected
 
 				}
@@ -174,6 +181,7 @@ public class NewsReaderController {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	void onEdit(ActionEvent event) {
 		try {
@@ -185,11 +193,13 @@ public class NewsReaderController {
 			controller.setArticle(article);
 			controller.setUsr(usr);
 			primaryStage.setScene(articleScene);
+			getData();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	@FXML
 	void onNew(ActionEvent event) {
 		try {
@@ -197,18 +207,47 @@ public class NewsReaderController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
 			Scene articleScene = new Scene(loader.load());
 			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
 			controller.setUsr(usr);
 			primaryStage.setScene(articleScene);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	void onDelete(ActionEvent event) {
-		//please try carefully and only if creating new article is working
-		//newsReaderModel.deleteArticle(this.Article);
+		// please try carefully and only if creating new article is working
+		// newsReaderModel.deleteArticle(this.Article);
 		getData();
 	}
+
+	@FXML
+	void onLogin(ActionEvent event) {
+		try {
+			Scene parentScene = ((Node) event.getSource()).getScene();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+
+			LoginController controller = loader.<LoginController>getController();
+			controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
+			stage.showAndWait();
+
+			User loggedUser = controller.getLoggedUsr();
+			if (loggedUser != null) {
+				setUsr(loggedUser);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@FXML
 	void onExit(ActionEvent event) {
 		System.exit(0);

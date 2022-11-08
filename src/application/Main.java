@@ -93,10 +93,10 @@ public class Main extends Application {
 			//Connecting as public (anonymous) for your group
 			connection.setAnonymousAPIKey("ANON07_340"/*Put your group API Key here*/);
 			//Login without login form:
-			connection.login("DEV_TEAM_07", "123707@3"); //User: DEV_TEAM_07 and password "123707@3" 
-			User user = new User ("DEV_TEAM_07", 
-			Integer.parseInt(connection.getIdUser()));
-			controller.setUsr(user);
+			//connection.login("DEV_TEAM_07", "123707@3"); //User: DEV_TEAM_07 and password "123707@3" 
+			//User user = new User ("DEV_TEAM_07", 
+			//Integer.parseInt(connection.getIdUser()));
+			//controller.setUsr(user);
 			controller.setConnectionManager(connection);	
 
 			//end code for main window reader
