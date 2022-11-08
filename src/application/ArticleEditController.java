@@ -21,10 +21,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +42,7 @@ import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
 /**
- * @author ÁngelLucas
+ * @author AngelLucas
  *
  */
 public class ArticleEditController {
@@ -58,6 +61,26 @@ public class ArticleEditController {
 	private User usr;
 	//TODO add attributes and methods as needed
 
+    @FXML
+    private TextField title;
+    @FXML
+    private TextField subtitle;
+    @FXML
+    private MenuButton category;
+    @FXML
+    private ImageView image;
+    @FXML
+    private TextArea text;
+    
+    private Boolean showBody;
+    
+    @FXML
+    private Button btnText;
+    
+    @FXML
+	void initialize() { 
+		this.showBody = false;
+    }
 
 
 	@FXML
@@ -148,8 +171,16 @@ public class ArticleEditController {
 	 *            the article to set
 	 */
 	void setArticle(Article article) {
+		System.out.print(article);
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
-		//TODO update UI
+		
+		if (article.getImageData() != null) {
+			this.image.setImage(article.getImageData());
+		}
+		this.title.setText(article.getTitle());
+		this.subtitle.setText(article.getSubtitle());
+		// this.category.setText("Category: " + article.getCategory());
+		this.text.setText(article.getAbstractText());
 	}
 	
 	/**
@@ -169,5 +200,24 @@ public class ArticleEditController {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	}
+	
+	@FXML
+	public void switchText (ActionEvent event) {
+		if (!showBody) {
+			this.showBody = true;
+			this.text.setText(this.editingArticle.getBodyText());
+			this.btnText.setText("show abstract");
+			return;
+		}
+		this.showBody = false;
+		this.text.setText(this.editingArticle.getAbstractText());
+		this.btnText.setText("show body");
+	}
+	
+	@FXML
+	public void goBack (ActionEvent event) {
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.close();
 	}
 }

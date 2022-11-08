@@ -100,13 +100,7 @@ public class ArticleDetailsController {
 		
 		@FXML
 		public void goBack (ActionEvent event) {
-	    	try {
-				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
-				Scene articleScene = new Scene(loader.load());
-				primaryStage.setScene(articleScene);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.close();
 		}
 }

@@ -5,16 +5,19 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXTextArea?>
 
 <AnchorPane prefHeight="410.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <ImageView fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
       <Label text="News Online" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="13.0" />
@@ -28,7 +31,7 @@
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin></Label>
-                  <TextField prefWidth="250.0" />
+                  <TextField fx:id="title" prefWidth="250.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
@@ -37,7 +40,7 @@
                      <HBox.margin>
                         <Insets right="23.0" />
                      </HBox.margin></Label>
-                  <TextField prefWidth="250.0" />
+                  <TextField fx:id="subtitle" prefWidth="250.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
@@ -46,12 +49,20 @@
                      <HBox.margin>
                         <Insets right="13.0" />
                      </HBox.margin></Label>
-                  <CheckBox mnemonicParsing="false" />
+                  <MenuButton fx:id="category" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" text="Category">
+		              <items>
+		                <MenuItem mnemonicParsing="false" text="All" />
+		                <MenuItem mnemonicParsing="false" text="National" />
+		                <MenuItem fx:id="CategoryInternational" mnemonicParsing="false" text="International" />
+		                <MenuItem fx:id="CategorySport" mnemonicParsing="false" text="Sport" />
+		                <MenuItem fx:id="CategoryEconomy" mnemonicParsing="false" text="Economy" />
+		              </items>
+		            </MenuButton>
                </children>
             </HBox>
          </children>
       </VBox>
-      <Pane layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <JFXTextArea fx:id="text" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
             <JFXButton buttonType="RAISED" prefWidth="70.0" style="-fx-background-color: lightgrey;" text="back">
@@ -74,7 +85,7 @@
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="abstract/body">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="show body">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
