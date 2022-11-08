@@ -14,10 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane prefHeight="410.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0"/>
       <Label text="News Online" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="13.0" />
@@ -51,31 +52,31 @@
                      </HBox.margin></Label>
                   <MenuButton fx:id="category" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" text="Category">
 		              <items>
-		                <MenuItem mnemonicParsing="false" text="All" />
-		                <MenuItem mnemonicParsing="false" text="National" />
-		                <MenuItem fx:id="CategoryInternational" mnemonicParsing="false" text="International" />
-		                <MenuItem fx:id="CategorySport" mnemonicParsing="false" text="Sport" />
-		                <MenuItem fx:id="CategoryEconomy" mnemonicParsing="false" text="Economy" />
+		                <MenuItem mnemonicParsing="false" text="All" onAction="#selectAll"/>
+		                <MenuItem mnemonicParsing="false" text="National" onAction="#selectNational"/>
+		                <MenuItem mnemonicParsing="false" text="International" onAction="#selectInternational"/>
+		                <MenuItem mnemonicParsing="false" text="Sport" onAction="#selectSport"/>
+		                <MenuItem mnemonicParsing="false" text="Economy" onAction="#selectEconomy"/>
 		              </items>
 		            </MenuButton>
                </children>
             </HBox>
          </children>
       </VBox>
-      <JFXTextArea fx:id="text" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <HTMLEditor fx:id="text" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
-            <JFXButton buttonType="RAISED" prefWidth="70.0" style="-fx-background-color: lightgrey;" text="back">
+            <JFXButton buttonType="RAISED" prefWidth="70.0" style="-fx-background-color: lightgrey;" text="back" onAction="#goBack">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="90.0" style="-fx-background-color: lightgrey;" text="send &amp; back">
+            <JFXButton buttonType="RAISED" prefWidth="90.0" style="-fx-background-color: lightgrey;" text="send &amp; back" onAction="#send">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="save to file">
+            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="save to file" onAction="#write">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>

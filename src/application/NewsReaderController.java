@@ -200,6 +200,7 @@ public class NewsReaderController {
 			System.out.print(article);
 			controller.setArticle(article);
 			controller.setUsr(usr);
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
 			stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -225,6 +226,7 @@ public class NewsReaderController {
 		//newsReaderModel.deleteArticle(this.Article);
 		getData();
 	}
+	
 	@FXML
 	void onExit(ActionEvent event) {
 		System.exit(0);
