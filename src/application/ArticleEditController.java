@@ -21,10 +21,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +42,7 @@ import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
 /**
- * @author ÁngelLucas
+ * @author AngelLucas
  *
  */
 public class ArticleEditController {
@@ -58,6 +61,26 @@ public class ArticleEditController {
 	private User usr;
 	//TODO add attributes and methods as needed
 
+    @FXML
+    private TextField title;
+    @FXML
+    private TextField subtitle;
+    @FXML
+    private MenuButton category;
+    @FXML
+    private ImageView image;
+    @FXML
+    private HTMLEditor text;
+    
+    private Boolean showBody;
+    
+    @FXML
+    private Button btnText;
+    
+    @FXML
+	void initialize() { 
+		this.showBody = false;
+    }
 
 
 	@FXML
@@ -81,7 +104,7 @@ public class ArticleEditController {
 				Image image = controller.getImage();
 				if (image != null) {
 					editingArticle.setImage(image);
-					//TODO Update image on UI
+					this.image.setImage(image);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -90,21 +113,41 @@ public class ArticleEditController {
 		}
 	}
 	
+	@FXML
+	public void send (ActionEvent event) {
+		this.send();
+	}
+	
+	@FXML
+	public void write (ActionEvent event) {
+		this.write();
+	}
+	
 	/**
 	 * Send and article to server,
 	 * Title and category must be defined and category must be different to ALL
 	 * @return true if only if article was been correctly send
 	 */
 	private boolean send() {
-		String titleText = null; // TODO Get article title
-		Categories category = null; //TODO Get article cateory
+		
+		String titleText = this.editingArticle.getTitle(); 
+		Categories category = this.editingArticle.getCategory();
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
 			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
-//TODO prepare and send using connection.saveArticle( ...)
+		
+		this.editingArticle.titleProperty().set(this.title.getText());
+		this.editingArticle.subtitleProperty().set(this.subtitle.getText());
+		
+		try {
+			this.editingArticle.commit();
+			connection.saveArticle(this.getArticle());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return true;
 	}
@@ -149,7 +192,14 @@ public class ArticleEditController {
 	 */
 	void setArticle(Article article) {
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
-		//TODO update UI
+		
+		if (article.getImageData() != null) {
+			this.image.setImage(article.getImageData());
+		}
+		this.title.setText(article.getTitle());
+		this.subtitle.setText(article.getSubtitle());
+		this.category.setText(article.getCategory());
+		this.text.setHtmlText(article.getAbstractText());
 	}
 	
 	/**
@@ -169,5 +219,55 @@ public class ArticleEditController {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	}
+	
+	@FXML
+	public void switchText (ActionEvent event) {
+		if (!showBody) {
+			this.showBody = true;
+			this.text.setHtmlText(this.editingArticle.getBodyText());
+			this.btnText.setText("show abstract");
+			return;
+		}
+		this.showBody = false;
+		this.text.setHtmlText(this.editingArticle.getAbstractText());
+		this.btnText.setText("show body");
+	}
+	
+	@FXML
+	public void selectAll (ActionEvent event) {
+		this.editingArticle.setCategory(Categories.ALL);
+		this.category.setText("All");
+	}
+	
+	@FXML
+	public void selectNational (ActionEvent event) {
+		this.editingArticle.setCategory(Categories.NATIONAL);
+		this.category.setText("National");
+	}
+	
+	@FXML
+	public void selectInternational (ActionEvent event) {
+		this.editingArticle.setCategory(Categories.INTERNATIONAL);
+		this.category.setText("International");
+	}
+	
+	@FXML
+	public void selectSport (ActionEvent event) {
+		this.editingArticle.setCategory(Categories.SPORTS);
+		this.category.setText("Sport");
+	}
+	
+	@FXML
+	public void selectEconomy (ActionEvent event) {
+		this.editingArticle.setCategory(Categories.ECONOMY);
+		this.category.setText("Economy");
+	}
+	
+	@FXML
+	public void goBack (ActionEvent event) {
+		this.editingArticle.discardChanges();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.close();
 	}
 }
