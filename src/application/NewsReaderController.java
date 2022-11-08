@@ -3,11 +3,14 @@
  */
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 import application.news.Article;
 import application.news.User;
+import application.utils.JsonArticle;
+import application.utils.exceptions.ErrorMalFormedArticle;
 import application.news.Categories;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import serverConection.ConnectionManager;
 import javafx.beans.value.ChangeListener;
@@ -37,7 +41,6 @@ public class NewsReaderController {
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 	private User usr;
 	Article Article;
-
 
 	@FXML
 	private ListView<Article> articleListView;
@@ -83,26 +86,25 @@ public class NewsReaderController {
 		filteredArticleList = new FilteredList<>(newsReaderModel.getArticles(), article -> true);
 		this.articleListView.setItems(filteredArticleList);
 		articleListView.getSelectionModel().selectFirst();
-		
 
-    	if(this.usr == null) {
-    		this.btnNew.setVisible(false);
-    		this.btnDelete.setVisible(false);
-    		this.btnEdit.setVisible(false);
-    		this.btnLoad.setVisible(false);
-    	}else {
-    		this.btnNew.setVisible(true);
-    		this.btnDelete.setVisible(true);
-    		this.btnEdit.setVisible(true);
-    		this.btnLoad.setVisible(true);
-    	}
+		if (this.usr == null) {
+			this.btnNew.setVisible(false);
+			this.btnDelete.setVisible(false);
+			this.btnEdit.setVisible(false);
+			this.btnLoad.setVisible(false);
+		} else {
+			this.btnNew.setVisible(true);
+			this.btnDelete.setVisible(true);
+			this.btnEdit.setVisible(true);
+			this.btnLoad.setVisible(true);
+		}
 
 	}
 
 	@FXML
 	private void filterCategorie(ActionEvent event) {
 		String filterText = this.categorieList.getValue().toString();
-	
+
 		if (filterText == "All") {
 			filteredArticleList.setPredicate(article -> true);
 
@@ -150,7 +152,7 @@ public class NewsReaderController {
 					articleAbstract.getEngine().loadContent(Article.getAbstractText());
 					imageView.setImage(Article.getImageData());
 					Article.setIdArticle(newValue.getIdArticle());
-					
+
 				} else { // Nothing selected
 
 				}
@@ -174,6 +176,7 @@ public class NewsReaderController {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	void onEdit(ActionEvent event) {
 		try {
@@ -188,8 +191,9 @@ public class NewsReaderController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	@FXML
 	void onNew(ActionEvent event) {
 		try {
@@ -203,15 +207,47 @@ public class NewsReaderController {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	void onDelete(ActionEvent event) {
-		//please try carefully and only if creating new article is working
-		//newsReaderModel.deleteArticle(this.Article);
+		// please try carefully and only if creating new article is working
+		// newsReaderModel.deleteArticle(this.Article);
 		getData();
 	}
+
 	@FXML
 	void onExit(ActionEvent event) {
 		System.exit(0);
 	}
 
+	@FXML
+	void onLoad(ActionEvent event) throws IOException {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Choose Article file");
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Article files (*.news)", "*.news");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show open file dialog
+		File file = fileChooser.showOpenDialog(new Stage());
+		if (file == null) {
+			return;
+		}
+
+		try {
+			Article article = JsonArticle.jsonToArticle(JsonArticle.readFile(file.getAbsolutePath()));
+			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			Scene articleScene = new Scene(loader.load());
+			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setArticle(article);
+			controller.setUsr(usr);
+			primaryStage.setScene(articleScene);
+			System.out.print(article);
+
+		} catch (ErrorMalFormedArticle ex) {
+			ex.printStackTrace();
+		}
+	}
 }
