@@ -57,7 +57,7 @@ public class ArticleDetailsController {
 
 	    @FXML
 		void initialize() { 
-			this.showBody = false;
+			this.showBody = true;
 	    }
 	    
 
@@ -84,7 +84,7 @@ public class ArticleDetailsController {
 			this.title.setText("Title: " + article.getTitle());
 			this.subtitle.setText("Subtitle: " + article.getSubtitle());
 			this.category.setText("Category: " + article.getCategory());
-			this.text.setText(article.getAbstractText());
+			this.text.setText(article.getBodyText());
 		}
 		
 		@FXML
