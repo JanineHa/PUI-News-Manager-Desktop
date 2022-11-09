@@ -22,6 +22,8 @@ import javafx.event.ActionEvent;
 
 /**
  * @author AngelLucas
+ * Manon Epplée
+ * Janine Haschke
  *
  */
 public class ArticleDetailsController {

@@ -42,6 +42,8 @@ import javafx.collections.transformation.FilteredList;
 
 /**
  * @author ÃngelLucas
+ * * Manon Epplée
+ * Janine Haschke
  *
  */
 public class NewsReaderController {

@@ -23,6 +23,8 @@ import serverConection.exceptions.ServerCommunicationError;
  * This class provides the services needed for NewsReader controller
  * 
  * @author Ã�ngelLucas
+ * * Manon Epplée
+ * Janine Haschke
  *
  */
 class NewsReaderModel {

@@ -43,7 +43,8 @@ import serverConection.exceptions.ServerCommunicationError;
 /**
  * 
  * @author AngelLucas
- *
+ ** Manon Epplée
+ * Janine Haschke
  * 
  */
 public class ArticleEditController {
