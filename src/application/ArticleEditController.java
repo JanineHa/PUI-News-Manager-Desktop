@@ -86,6 +86,7 @@ public class ArticleEditController {
 	private Button btnEditor;
 	@FXML
 	private Button btnWrite;
+
 	@FXML
 	void initialize() {
 		this.showBody = true;
@@ -245,7 +246,6 @@ public class ArticleEditController {
 	void setArticle(Article article) {
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
 
-		
 		if (article != null) {
 			this.title.setText(article.getTitle());
 			this.subtitle.setText(article.getSubtitle());
@@ -255,7 +255,7 @@ public class ArticleEditController {
 			this.textEditor.setText(article.getBodyText());
 			this.htmlEditor.setHtmlText(article.getBodyText());
 		}
-
+		this.category.setText("ALL");
 	}
 
 	/**
@@ -267,11 +267,19 @@ public class ArticleEditController {
 		// TODO prepare and send using connection.saveArticle( ...)
 
 		String textTitle = this.title.getText();
-		if (textTitle == null || textTitle.equals("")) {
+		Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase());
+	
+		if (textTitle == null ||  textTitle.equals("") ) {
 			Alert alert = new Alert(AlertType.INFORMATION, "Enter a title to save the article.");
 			alert.showAndWait();
+			return false;
+		}
+		if ( choosenCategory == null ||  choosenCategory == Categories.ALL) {
+				Alert alert2 = new Alert(AlertType.INFORMATION, "Choose a category different from ALL.");
+				alert2.showAndWait();
+				return false;
+					
 		} else {
-			Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase());
 			String textAbstract;
 			String textBody;
 			if (this.textEditor.isVisible()) {
