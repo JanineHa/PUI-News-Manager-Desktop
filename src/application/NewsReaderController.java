@@ -98,15 +98,14 @@ public class NewsReaderController {
 		articleListView.getSelectionModel().selectFirst();
 
 		if (this.usr == null) {
-			this.btnNew.setVisible(false);
 			this.btnDelete.setVisible(false);
 			this.btnEdit.setVisible(false);
-			this.btnLoad.setVisible(false);
+			
 		} else {
-			this.btnNew.setVisible(true);
+			
 			this.btnDelete.setVisible(true);
 			this.btnEdit.setVisible(true);
-			this.btnLoad.setVisible(true);
+			
 		}
 
 	}
@@ -245,6 +244,7 @@ public class NewsReaderController {
 			stage.setTitle("New article page");
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			controller.setArticle(null);
 			controller.setUsr(usr);
 		
 			stage.showAndWait();
@@ -257,8 +257,8 @@ public class NewsReaderController {
 	@FXML
 	void onDelete(ActionEvent event) {
 		// please try carefully and only if creating new article is working
-		// newsReaderModel.deleteArticle(this.Article);
-		getData();
+		 newsReaderModel.deleteArticle(this.Article);
+	
 	}
 
 	@FXML

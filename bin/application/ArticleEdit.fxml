@@ -71,7 +71,7 @@
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" onAction="#onSend" prefWidth="90.0" style="-fx-background-color: #2b654f;" text="Send &amp; Back" textFill="WHITE">
+            <JFXButton fx:id="btnSend" buttonType="RAISED" onAction="#onSend" prefWidth="90.0" style="-fx-background-color: #2b654f;" text="Send &amp; Back" textFill="WHITE">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>

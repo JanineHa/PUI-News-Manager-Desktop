@@ -81,15 +81,17 @@ public class ArticleEditController {
 	@FXML
 	private Button btnText;
 	@FXML
+	private Button btnSend;
+	@FXML
 	private Button btnEditor;
 	@FXML
 	private Button btnWrite;
-
 	@FXML
 	void initialize() {
 		this.showBody = true;
 		this.textEditor.setVisible(true);
 		this.htmlEditor.setVisible(false);
+
 	}
 
 	@FXML
@@ -215,6 +217,7 @@ public class ArticleEditController {
 
 		// TODO Update UI and controls
 		if (usr == null) {
+			this.btnSend.setVisible(false);
 			return; // Not logged user
 		}
 		this.username.setText(usr.getLogin());
