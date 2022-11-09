@@ -42,9 +42,7 @@ import serverConection.exceptions.ServerCommunicationError;
 
 /**
  * 
- * @author AngelLucas
- ** Manon Epplée
- * Janine Haschke
+ * @author AngelLucas Manon Epplée Janine Haschke
  * 
  */
 public class ArticleEditController {
@@ -77,18 +75,24 @@ public class ArticleEditController {
 	@FXML
 	private ImageView image;
 	@FXML
-	private HTMLEditor text;
+	private HTMLEditor htmlEditor;
+	@FXML
+	private TextArea textEditor;
 
 	private Boolean showBody;
-
+	private Boolean showHTML;
 	@FXML
 	private Button btnText;
+	@FXML
+	private Button btnEditor;
 	@FXML
 	private Button btnWrite;
 
 	@FXML
 	void initialize() {
-		this.showBody = false;
+		this.showBody = true;
+		this.showHTML = true;
+
 	}
 
 	@FXML
@@ -122,12 +126,17 @@ public class ArticleEditController {
 	}
 
 	@FXML
-	public void send(ActionEvent event) {
-		this.send();
+	public void onSend(ActionEvent event) {
+		if (this.sendBack()) {
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.close();
+		}
+		return;
+
 	}
 
 	@FXML
-	public void write(ActionEvent event) {
+	public void onWrite(ActionEvent event) {
 		this.write();
 	}
 
@@ -137,28 +146,64 @@ public class ArticleEditController {
 	 * 
 	 * @return true if only if article was been correctly send
 	 */
-	private boolean send() {
+	private boolean sendBack() {
 
-		String titleText = this.editingArticle.getTitle();
-		Categories category = this.editingArticle.getCategory();
-		if (titleText == null || category == null || titleText.equals("") || category == Categories.ALL) {
+		/*
+		 * String titleText = this.editingArticle.getTitle(); Categories category =
+		 * this.editingArticle.getCategory(); if (titleText == null || category == null
+		 * || titleText.equals("") || category == Categories.ALL) { Alert alert = new
+		 * Alert(AlertType.ERROR,
+		 * "Imposible send the article!! Title and categoy are mandatory",
+		 * ButtonType.OK); alert.showAndWait(); return; }
+		 * 
+		 * this.editingArticle.titleProperty().set(this.title.getText());
+		 * this.editingArticle.subtitleProperty().set(this.subtitle.getText());
+		 * 
+		 * try { this.editingArticle.commit();
+		 * connection.saveArticle(this.getArticle()); } catch (Exception e) {
+		 * e.printStackTrace(); }
+		 * 
+		 * return;
+		 */
+
+		String textTitle = this.title.getText(); // TODO Get article title
+		Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase()); // TODO Get article
+																								// category
+		if (textTitle == null || choosenCategory == null || textTitle.equals("") || choosenCategory == Categories.ALL) {
 			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory",
 					ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
 
-		this.editingArticle.titleProperty().set(this.title.getText());
-		this.editingArticle.subtitleProperty().set(this.subtitle.getText());
+		// TODO prepare and send using connection.saveArticle( ...)
+		String textAbstract = null;
+		String textBody = null;
+		Article article = new Article();
 
+		this.editingArticle.titleProperty().set(textTitle);
+		this.editingArticle.subtitleProperty().set(this.subtitle.getText());
+		this.editingArticle.abstractTextProperty().set(textAbstract);
+		this.editingArticle.bodyTextProperty().set(textBody);
+		this.editingArticle.setCategory(choosenCategory);
+		System.out.println(textTitle);
+		System.out.println(textBody);
+		System.out.println(textAbstract);
+		System.out.println(choosenCategory);
+
+		Image imageData = image.getImage();
+		if (imageData != null) {
+			article.setImageData(imageData);
+		}
 		try {
 			this.editingArticle.commit();
-			connection.saveArticle(this.getArticle());
-		} catch (Exception e) {
+			connection.saveArticle(getArticle());
+		} catch (ServerCommunicationError e) {
 			e.printStackTrace();
 		}
 
 		return true;
+
 	}
 
 	/**
@@ -211,10 +256,17 @@ public class ArticleEditController {
 		if (article.getImageData() != null) {
 			this.image.setImage(article.getImageData());
 		}
-		this.title.setText(article.getTitle());
-		this.subtitle.setText(article.getSubtitle());
-		this.category.setText(article.getCategory());
-		this.text.setHtmlText(article.getAbstractText());
+
+		if (article != null) {
+			this.title.setText(article.getTitle());
+			this.subtitle.setText(article.getSubtitle());
+			this.category.setText(article.getCategory());
+
+			this.textEditor.setText(article.getAbstractText());
+			this.htmlEditor.setHtmlText(article.getAbstractText());
+			this.htmlEditor.setHtmlText(article.getBodyText());
+		}
+
 	}
 
 	/**
@@ -237,15 +289,49 @@ public class ArticleEditController {
 
 	@FXML
 	public void switchText(ActionEvent event) {
-		if (!showBody) {
-			this.showBody = true;
-			this.text.setHtmlText(this.editingArticle.getBodyText());
-			this.btnText.setText("show abstract");
+		if (this.textEditor.isVisible()) {
+			if (showBody) {
+				this.showBody = false;
+				this.textEditor.setText(this.editingArticle.getBodyText());
+				this.btnText.setText("Show abstract");
+				return;
+			} else {
+				this.showBody = true;
+				this.textEditor.setText(this.editingArticle.getAbstractText());
+				this.btnText.setText("Show body");
+			}
+
+		} else if (this.htmlEditor.isVisible()) {
+			if (showBody) {
+				this.showBody = false;
+				this.htmlEditor.setHtmlText(this.editingArticle.getBodyText());
+				this.btnText.setText("Show abstract");
+				return;
+			} else {
+				this.showBody = true;
+				this.htmlEditor.setHtmlText(this.editingArticle.getAbstractText());
+				this.btnText.setText("Show body");
+			}
+
+		} else {
 			return;
 		}
-		this.showBody = false;
-		this.text.setHtmlText(this.editingArticle.getAbstractText());
-		this.btnText.setText("show body");
+	}
+
+	@FXML
+	public void switchEditor(ActionEvent event) {
+		if (showHTML) {
+			this.showHTML = false;
+			this.textEditor.setVisible(false);
+			this.htmlEditor.setVisible(true);
+			this.btnEditor.setText("Show Text");
+
+		} else {
+			this.showHTML = true;
+			this.textEditor.setVisible(true);
+			this.htmlEditor.setVisible(false);
+			this.btnEditor.setText("Show HTML");
+		}
 	}
 
 	@FXML
@@ -280,7 +366,7 @@ public class ArticleEditController {
 
 	@FXML
 	public void goBack(ActionEvent event) {
-		this.editingArticle.discardChanges();
+		// this.editingArticle.discardChanges();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.close();
 	}

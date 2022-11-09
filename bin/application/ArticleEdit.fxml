@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -61,7 +62,8 @@
             </HBox>
          </children>
       </VBox>
-      <HTMLEditor fx:id="text" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <HTMLEditor fx:id="htmlEditor" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+        <TextArea fx:id="textEditor" layoutX="31.0" layoutY="181.0" prefHeight="200.0" prefWidth="530.0" visible="true" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
             <JFXButton buttonType="RAISED" onAction="#goBack" prefWidth="70.0" style="-fx-background-color: #2b654f;" text="Back" textFill="WHITE">
@@ -69,17 +71,17 @@
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" onAction="#send" prefWidth="90.0" style="-fx-background-color: #2b654f;" text="Send &amp; Back" textFill="WHITE">
+            <JFXButton buttonType="RAISED" onAction="#onSend" prefWidth="90.0" style="-fx-background-color: #2b654f;" text="Send &amp; Back" textFill="WHITE">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnWrite" buttonType="RAISED" onAction="#write" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Save to file" textFill="WHITE">
+            <JFXButton fx:id="btnWrite" buttonType="RAISED" onAction="#onWrite" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Save to file" textFill="WHITE">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="Text/Html">
+            <JFXButton fx:id="btnEditor" buttonType="RAISED" onAction="#switchEditor" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="Show html">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
