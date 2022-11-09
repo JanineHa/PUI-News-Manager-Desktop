@@ -66,12 +66,12 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="300.0">
                      <children>
-                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="login">
+                        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Login" textFill="WHITE">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="btnCancel" buttonType="RAISED" onAction="#onCancel" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="cancel">
+                        <JFXButton fx:id="btnCancel" buttonType="RAISED" onAction="#onCancel" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Cancel" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>

@@ -16,7 +16,7 @@
 
 <AnchorPane prefHeight="410.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="120.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
       <Label text="News Online for:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -54,7 +54,7 @@
 		                <MenuItem mnemonicParsing="false" onAction="#selectAll" text="All" />
 		                <MenuItem mnemonicParsing="false" onAction="#selectNational" text="National" />
 		                <MenuItem mnemonicParsing="false" onAction="#selectInternational" text="International" />
-		                <MenuItem mnemonicParsing="false" onAction="#selectSport" text="Sport" />
+		                <MenuItem mnemonicParsing="false" onAction="#selectSport" text="Sports" />
 		                <MenuItem mnemonicParsing="false" onAction="#selectEconomy" text="Economy" />
 		              </items>
 		            </MenuButton>

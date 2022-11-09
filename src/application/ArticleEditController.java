@@ -70,7 +70,7 @@ public class ArticleEditController {
 	@FXML
 	private MenuButton category;
 	@FXML
-	private ImageView image;
+	private ImageView imageView;
 	@FXML
 	private HTMLEditor htmlEditorAbstract;
 	@FXML
@@ -79,8 +79,6 @@ public class ArticleEditController {
 	private TextArea textEditorAbstract;
 	@FXML
 	private TextArea textEditorBody;
-
-	private Boolean showBody;
 
 	@FXML
 	private Button btnText;
@@ -95,7 +93,7 @@ public class ArticleEditController {
 
 	@FXML
 	void initialize() {
-		this.showBody = true;
+	
 		this.textEditorBody.setVisible(true);
 		this.textEditorAbstract.setVisible(false);
 		this.htmlEditorBody.setVisible(false);
@@ -123,8 +121,9 @@ public class ArticleEditController {
 				ImagePickerController controller = loader.<ImagePickerController>getController();
 				Image image = controller.getImage();
 				if (image != null) {
-					editingArticle.setImage(image);
-					this.image.setImage(image);
+					this.editingArticle.setImage(image);
+					this.editingArticle.commit();
+					this.imageView.setImage(image);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -191,9 +190,9 @@ public class ArticleEditController {
 		System.out.println(textAbstract);
 		System.out.println(textBody);
 
-		Image imageData = image.getImage();
+		Image imageData = imageView.getImage();
 		if (imageData != null) {
-			article.setImageData(imageData);
+			editingArticle.setImage(imageData);
 		}
 		try {
 			this.editingArticle.commit();
@@ -258,13 +257,16 @@ public class ArticleEditController {
 			this.title.setText(article.getTitle());
 			this.subtitle.setText(article.getSubtitle());
 			this.category.setText(article.getCategory());
-			this.image.setImage(article.getImageData());
 			this.textAbstract = article.getAbstractText();
 			this.textBody = article.getBodyText();
 			this.textEditorBody.setText(textBody);
 			this.htmlEditorBody.setHtmlText(textBody);
 			this.textEditorAbstract.setText(textAbstract);
 			this.htmlEditorAbstract.setHtmlText(textAbstract);
+			
+			if (article.getImageData() != null) {
+				this.imageView.setImage(article.getImageData());
+			}
 
 		}
 
@@ -399,7 +401,7 @@ public class ArticleEditController {
 	@FXML
 	public void selectSport(ActionEvent event) {
 		this.editingArticle.setCategory(Categories.SPORTS);
-		this.category.setText("Sport");
+		this.category.setText("Sports");
 	}
 
 	@FXML
@@ -410,6 +412,7 @@ public class ArticleEditController {
 
 	@FXML
 	public void goBack(ActionEvent event) {
+        this.editingArticle.discardChanges();
 		try{
 			Stage primaryStage= (Stage) ((Node) event.getSource()).getScene().getWindow();
 			FXMLLoader loader= new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
