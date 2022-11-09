@@ -132,7 +132,7 @@ public class NewsReaderController {
 		return usr;
 	}
 
-	void setConnectionManager(ConnectionManager connection) {
+	public void setConnectionManager(ConnectionManager connection) {
 		this.newsReaderModel.setDummyData(false); // System is connected so dummy data are not needed
 		this.newsReaderModel.setConnectionManager(connection);
 		categorieList.getItems().addAll(newsReaderModel.getCategories());
@@ -143,7 +143,7 @@ public class NewsReaderController {
 	/**
 	 * @param usr the usr to set
 	 */
-	void setUsr(User usr) {
+	public void setUsr(User usr) {
 
 		this.usr = usr;
 		// Reload articles
@@ -203,31 +203,23 @@ public class NewsReaderController {
 		}
 	}
 
+	
 	@FXML
 	void onEdit(ActionEvent event) {
-		try {
-			Scene parentScene = ((Node) event.getSource()).getScene();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Pane root = loader.load();
-			Scene scene = new Scene(root);
-			Window parentStage = parentScene.getWindow();
-			Stage stage = new Stage();
-			stage.initOwner(parentStage);
-			stage.setScene(scene);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.setTitle("Edit Page");
-			ArticleEditController controller = loader.<ArticleEditController>getController();
-			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
+		try{
+			FXMLLoader loader= new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));			
+			Stage primaryStage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene articleScene= new Scene(loader.load());
 			
+			Article article= newsReaderModel.getFullArticle(Article.getIdArticle());
+			
+			ArticleEditController controller= loader.<ArticleEditController>getController();
 			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
 			controller.setArticle(article);
 			controller.setUsr(usr);
+			primaryStage.setScene(articleScene);
 
-			// getData();
-
-			stage.showAndWait();
-
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 
@@ -235,25 +227,17 @@ public class NewsReaderController {
 
 	@FXML
 	void onNew(ActionEvent event) {
-		try {
-			Scene parentScene = ((Node) event.getSource()).getScene();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Pane root = loader.load();
-			Scene scene = new Scene(root);
-			Window parentStage = parentScene.getWindow();
-			Stage stage = new Stage();
-			stage.initOwner(parentStage);
-			stage.setScene(scene);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.setTitle("New article page");
-			ArticleEditController controller = loader.<ArticleEditController>getController();
-			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+		try{
+			FXMLLoader loader= new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));			
+			Stage primaryStage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene articleScene= new Scene(loader.load());
+			ArticleEditController controller= loader.<ArticleEditController>getController();
 			controller.setArticle(null);
-			controller.setUsr(usr);
-		
-			stage.showAndWait();
+			controller.setUsr(this.usr);
+			controller.setConnectionMannager(newsReaderModel.getConnectionManager());
+			primaryStage.setScene(articleScene);
 
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
