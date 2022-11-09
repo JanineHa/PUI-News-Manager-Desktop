@@ -245,14 +245,12 @@ public class ArticleEditController {
 	void setArticle(Article article) {
 		this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
 
-		if (article.getImageData() != null) {
-			this.image.setImage(article.getImageData());
-		}
-
+		
 		if (article != null) {
 			this.title.setText(article.getTitle());
 			this.subtitle.setText(article.getSubtitle());
 			this.category.setText(article.getCategory());
+			this.image.setImage(article.getImageData());
 
 			this.textEditor.setText(article.getBodyText());
 			this.htmlEditor.setHtmlText(article.getBodyText());
