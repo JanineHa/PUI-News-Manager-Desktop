@@ -73,7 +73,7 @@
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" onAction="#write" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="save to file">
+            <JFXButton fx:id="btnWrite" buttonType="RAISED" onAction="#write" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="save to file">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>

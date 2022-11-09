@@ -69,7 +69,7 @@ class NewsReaderModel {
 	 * @return an observable list with the categories
 	 */
 	ObservableList<Categories> getCategories() {
-		
+	
 		return categories;
 	}
 

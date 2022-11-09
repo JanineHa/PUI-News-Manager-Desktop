@@ -177,6 +177,7 @@ public class NewsReaderController {
 			stage.initOwner(parentStage);
 			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Details Page");
 			ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
 			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
 			controller.setArticle(article);
@@ -199,6 +200,7 @@ public class NewsReaderController {
 			stage.initOwner(parentStage);
 			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Edit Page");
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
 			System.out.print(article);
@@ -215,12 +217,22 @@ public class NewsReaderController {
 	@FXML
 	void onNew(ActionEvent event) {
 		try {
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene parentScene = ((Node) event.getSource()).getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Scene articleScene = new Scene(loader.load());
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("New article page");
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 			controller.setUsr(usr);
-			primaryStage.setScene(articleScene);
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			stage.showAndWait();
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -255,15 +267,16 @@ public class NewsReaderController {
 
 		try {
 			Article article = JsonArticle.jsonToArticle(JsonArticle.readFile(file.getAbsolutePath()));
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
 			Scene articleScene = new Scene(loader.load());
 			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
 			controller.setArticle(article);
 			controller.setUsr(usr);
-			primaryStage.setScene(articleScene);
-			System.out.print(article);
-
+			stage.setScene(articleScene);
+			stage.setTitle("New article page");
+			
 		} catch (ErrorMalFormedArticle ex) {
 			ex.printStackTrace();
 		}
