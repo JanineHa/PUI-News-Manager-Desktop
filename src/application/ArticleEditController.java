@@ -134,7 +134,11 @@ public class ArticleEditController {
 
 	@FXML
 	public void onWrite(ActionEvent event) {
-		this.write();
+		if (this.write()) {
+			Alert alert = new Alert(AlertType.INFORMATION, "File successfully saved", ButtonType.OK);
+			alert.showAndWait();
+		}
+		;
 	}
 
 	/**
@@ -144,24 +148,6 @@ public class ArticleEditController {
 	 * @return true if only if article was been correctly send
 	 */
 	private boolean sendBack() {
-
-		/*
-		 * String titleText = this.editingArticle.getTitle(); Categories category =
-		 * this.editingArticle.getCategory(); if (titleText == null || category == null
-		 * || titleText.equals("") || category == Categories.ALL) { Alert alert = new
-		 * Alert(AlertType.ERROR,
-		 * "Imposible send the article!! Title and categoy are mandatory",
-		 * ButtonType.OK); alert.showAndWait(); return; }
-		 * 
-		 * this.editingArticle.titleProperty().set(this.title.getText());
-		 * this.editingArticle.subtitleProperty().set(this.subtitle.getText());
-		 * 
-		 * try { this.editingArticle.commit();
-		 * connection.saveArticle(this.getArticle()); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * return;
-		 */
 
 		String textTitle = this.title.getText(); // TODO Get article title
 		Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase()); // TODO Get article
@@ -178,15 +164,21 @@ public class ArticleEditController {
 		String textBody = null;
 		Article article = new Article();
 
+		if (this.textEditor.isVisible()) {
+			textAbstract = this.textEditor.getText();
+			textBody = this.textEditor.getText();
+		} else {
+			textAbstract = this.htmlEditor.getHtmlText();
+			textBody = this.htmlEditor.getHtmlText();
+		}
+
 		this.editingArticle.titleProperty().set(textTitle);
 		this.editingArticle.subtitleProperty().set(this.subtitle.getText());
 		this.editingArticle.abstractTextProperty().set(textAbstract);
 		this.editingArticle.bodyTextProperty().set(textBody);
 		this.editingArticle.setCategory(choosenCategory);
-		System.out.println(textTitle);
-		System.out.println(textBody);
 		System.out.println(textAbstract);
-		System.out.println(choosenCategory);
+		System.out.println(textBody);
 
 		Image imageData = image.getImage();
 		if (imageData != null) {
@@ -194,7 +186,7 @@ public class ArticleEditController {
 		}
 		try {
 			this.editingArticle.commit();
-			connection.saveArticle(getArticle());
+			connection.saveArticle(this.getArticle());
 		} catch (ServerCommunicationError e) {
 			e.printStackTrace();
 		}
@@ -267,20 +259,47 @@ public class ArticleEditController {
 
 	/**
 	 * Save an article to a file in a json format Article must have a title
+	 * 
+	 * @return
 	 */
-	private void write() {
-		// TODO Consolidate all changes
-		this.editingArticle.commit();
-		// Removes special characters not allowed for filenames
-		String name = this.getArticle().getTitle().replaceAll("\\||/|\\\\|:|\\?", "");
-		String fileName = "saveNews//" + name + ".news";
-		JsonObject data = JsonArticle.articleToJson(this.getArticle());
-		try (FileWriter file = new FileWriter(fileName)) {
-			file.write(data.toString());
-			file.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
+	private boolean write() {
+		// TODO prepare and send using connection.saveArticle( ...)
+
+		String textTitle = this.title.getText();
+		if (textTitle == null || textTitle.equals("")) {
+			Alert alert = new Alert(AlertType.INFORMATION, "Enter a title to save the article.");
+			alert.showAndWait();
+		} else {
+			Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase());
+			String textAbstract;
+			String textBody;
+			if (this.textEditor.isVisible()) {
+				textAbstract = this.textEditor.getText();
+				textBody = this.textEditor.getText();
+			} else {
+				textAbstract = this.htmlEditor.getHtmlText();
+				textBody = this.htmlEditor.getHtmlText();
+			}
+
+			this.editingArticle.titleProperty().set(textTitle);
+			this.editingArticle.subtitleProperty().set(this.subtitle.getText());
+			this.editingArticle.abstractTextProperty().set(textAbstract);
+			this.editingArticle.bodyTextProperty().set(textBody);
+			this.editingArticle.setCategory(choosenCategory);
+
+			this.editingArticle.commit();
+			// Removes special characters not allowed for filenames
+			String name = this.getArticle().getTitle().replaceAll("\\||/|\\\\|:|\\?", "");
+			String fileName = "saveNews//" + name + ".news";
+			JsonObject data = JsonArticle.articleToJson(this.getArticle());
+			try (FileWriter file = new FileWriter(fileName)) {
+				file.write(data.toString());
+				file.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		return true;
 	}
 
 	@FXML
