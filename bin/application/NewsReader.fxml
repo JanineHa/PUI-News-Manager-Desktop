@@ -65,7 +65,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <JFXButton fx:id="btnLogin"  buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Login">
+            <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Login">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -81,18 +81,18 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton fx:id="btnLoad"   buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Load From File" GridPane.rowIndex="1">
+                  <JFXButton fx:id="btnLoad" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Load From File" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btnDelete"  onAction="#onDelete" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXButton fx:id="btnEdit" onAction="#onEdit" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Edit" GridPane.columnIndex="1">
+                  <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#onDelete" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="btnEdit" buttonType="RAISED" onAction="#onEdit" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Edit" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </JFXButton>
-                  <JFXButton fx:id="btnNew" onAction="#onNew" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="New">
+                  <JFXButton fx:id="btnNew" buttonType="RAISED" onAction="#onNew" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="New">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
@@ -102,7 +102,7 @@
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </GridPane>
-            <JFXButton fx:id="btnExit" onAction="#onExit" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Exit" />
+            <JFXButton fx:id="btnExit" buttonType="RAISED" onAction="#onExit" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Exit" />
          </children>
       </VBox>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="170.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="130.0" />

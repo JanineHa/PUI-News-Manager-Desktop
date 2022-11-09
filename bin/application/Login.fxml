@@ -3,12 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="loginWindow" prefHeight="294.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
    <children>
@@ -26,7 +28,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField prefWidth="230.0" promptText="UserId">
+                        <TextField fx:id="UserId" prefWidth="230.0" promptText="UserId">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -46,11 +48,11 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <TextField prefWidth="230.0" promptText="UserId">
+                        <PasswordField fx:id="Passwd" prefWidth="230.0" promptText="UserId">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
-                        </TextField>
+                        </PasswordField>
                      </children>
                      <VBox.margin>
                         <Insets bottom="25.0" />
@@ -58,12 +60,12 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="300.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="login">
+                        <JFXButton fx:id="LoginBtn" buttonType="RAISED" onAction="#LoginAction" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="login">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="cancel">
+                        <JFXButton fx:id="CancelBtn" buttonType="RAISED" onAction="#cancel" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="cancel">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -74,5 +76,6 @@
             </VBox>
          </children>
       </Pane>
+      <Text fx:id="ErrorMsg" layoutX="150.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
