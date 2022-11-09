@@ -2,79 +2,89 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane prefHeight="410.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <ImageView fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
-      <Label text="News Online" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <ImageView fx:id="image" fitHeight="100.0" fitWidth="120.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <Label text="News Online for:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <VBox layoutX="421.0" layoutY="14.0" prefHeight="100.0" prefWidth="330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+      <Label fx:id="username" layoutX="103.0" layoutY="6.0" prefHeight="26.0" prefWidth="100.0" AnchorPane.leftAnchor="118.0" />
+      <VBox layoutX="421.0" layoutY="14.0" prefHeight="100.0" prefWidth="320.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Title:">
+                  <Label text="Title:" underline="true">
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin></Label>
-                  <TextField prefWidth="250.0" />
+                  <TextField fx:id="title" prefWidth="250.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Subtitle:">
+                  <Label text="Subtitle:" underline="true">
                      <HBox.margin>
                         <Insets right="23.0" />
                      </HBox.margin></Label>
-                  <TextField prefWidth="250.0" />
+                  <TextField fx:id="subtitle" prefWidth="250.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Categorie:">
+                  <Label text="Categorie:" underline="true">
                      <HBox.margin>
                         <Insets right="13.0" />
                      </HBox.margin></Label>
-                  <CheckBox mnemonicParsing="false" />
+                  <MenuButton fx:id="category" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" text="Category">
+		              <items>
+		                <MenuItem mnemonicParsing="false" onAction="#selectAll" text="All" />
+		                <MenuItem mnemonicParsing="false" onAction="#selectNational" text="National" />
+		                <MenuItem mnemonicParsing="false" onAction="#selectInternational" text="International" />
+		                <MenuItem mnemonicParsing="false" onAction="#selectSport" text="Sport" />
+		                <MenuItem mnemonicParsing="false" onAction="#selectEconomy" text="Economy" />
+		              </items>
+		            </MenuButton>
                </children>
             </HBox>
          </children>
       </VBox>
-      <Pane layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <HTMLEditor fx:id="text" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
-            <JFXButton buttonType="RAISED" prefWidth="70.0" style="-fx-background-color: lightgrey;" text="back">
+            <JFXButton buttonType="RAISED" onAction="#goBack" prefWidth="70.0" style="-fx-background-color: #2b654f;" text="Back" textFill="WHITE">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="90.0" style="-fx-background-color: lightgrey;" text="send &amp; back">
+            <JFXButton buttonType="RAISED" onAction="#send" prefWidth="90.0" style="-fx-background-color: #2b654f;" text="Send &amp; Back" textFill="WHITE">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="save to file">
+            <JFXButton fx:id="btnWrite" buttonType="RAISED" onAction="#write" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Save to file" textFill="WHITE">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="text/html">
+            <JFXButton buttonType="RAISED" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="Text/Html">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="abstract/body">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show body">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

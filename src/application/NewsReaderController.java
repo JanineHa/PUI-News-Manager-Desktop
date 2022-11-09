@@ -3,11 +3,14 @@
  */
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 import application.news.Article;
 import application.news.User;
+import application.utils.JsonArticle;
+import application.utils.exceptions.ErrorMalFormedArticle;
 import application.news.Categories;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,13 +19,20 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
+
+import javafx.stage.FileChooser;
+
+import javafx.stage.Modality;
+
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import serverConection.ConnectionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,7 +41,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 /**
+<<<<<<< HEAD
  * @author �ngelLucas
+
  *
  */
 public class NewsReaderController {
@@ -62,6 +74,8 @@ public class NewsReaderController {
 	private ImageView imageView;
 	@FXML
 	private WebView articleAbstract;
+	@FXML
+	private Label username;
 
 	private ConnectionManager local_connectionManager;
 
@@ -140,6 +154,10 @@ public class NewsReaderController {
 		// Reload articles
 		this.getData();
 		// TODO Update UI
+		if (usr == null) {
+			return; // Not logged user
+		}
+		this.username.setText(usr.getLogin());
 	}
 
 	@FXML
@@ -166,14 +184,21 @@ public class NewsReaderController {
 	@FXML
 	void onOpenDetails(ActionEvent event) {
 		try {
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene parentScene = ((Node) event.getSource()).getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
-			Scene articleScene = new Scene(loader.load());
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Details Page");
 			ArticleDetailsController controller = loader.<ArticleDetailsController>getController();
 			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
 			controller.setArticle(article);
 			controller.setUsr(usr);
-			primaryStage.setScene(articleScene);
+			stage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -182,14 +207,27 @@ public class NewsReaderController {
 	@FXML
 	void onEdit(ActionEvent event) {
 		try {
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene parentScene = ((Node) event.getSource()).getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Scene articleScene = new Scene(loader.load());
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Edit Page");
 			ArticleEditController controller = loader.<ArticleEditController>getController();
 			Article article = newsReaderModel.getFullArticle(Article.getIdArticle());
+			System.out.print(article);
 			controller.setArticle(article);
 			controller.setUsr(usr);
-			primaryStage.setScene(articleScene);
+
+			// getData();
+
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			stage.showAndWait();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -199,65 +237,27 @@ public class NewsReaderController {
 	@FXML
 	void onNew(ActionEvent event) {
 		try {
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Scene parentScene = ((Node) event.getSource()).getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			Scene articleScene = new Scene(loader.load());
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("New article page");
 			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
 			controller.setUsr(usr);
-			primaryStage.setScene(articleScene);
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			stage.showAndWait();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@FXML
-	void onLogin(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
-			Scene scene = new Scene(loader.load());
-			Stage primaryStage = new Stage();
-			primaryStage.initModality(Modality.WINDOW_MODAL);
-			primaryStage.setTitle(scene.toString());
-			primaryStage.setScene(scene);
-
-			LoginController controller = loader.<LoginController>getController();
-			controller.setConnectionManager(newsReaderModel.getConnectionManager());
-			// controller.setConnectionManager(this.local_connectionManager);
-			primaryStage.showAndWait();
-
-			// System.out.println("Yo1");
-			/*
-			 * System.out.println("Yo1"); Stage primaryStage = (Stage) ((Node)
-			 * event.getSource()).getScene().getWindow(); System.out.println("Yo2");
-			 * FXMLLoader loader = new
-			 * FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile())); Scene
-			 * LoginScene = new Scene(loader.load());
-			 * 
-			 * // controller.setConnectionManager(this.ConnectionManager);
-			 * System.out.println("Yo"); LoginController controller =
-			 * loader.<LoginController>getController(); primaryStage.setScene(LoginScene);
-			 * primaryStage.initModality(Modality.WINDOW_MODAL); primaryStage.showAndWait();
-			 * System.out.println("Bye");
-			 */
-			User CheckLogin_usr = controller.getLoggedUsr();
-			// controller.setConnectionManager(newsReaderModel.getConnectionManager());
-			// ID: DEV_TEAM_07
-			// Passwd:123707@3
-			if (CheckLogin_usr == null) {
-			} else {
-				setUsr(CheckLogin_usr);
-				String Login_usr_name = CheckLogin_usr.getLogin();
-				
-				if(Login_usr_name != null) {
-					System.out.println(Login_usr_name);
-					//UserIDTxt.setText(Login_usr_name); //Get login from User class object
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return;
-	}
 
 	@FXML
 	void onDelete(ActionEvent event) {
@@ -266,9 +266,68 @@ public class NewsReaderController {
 		getData();
 	}
 
+
+	@FXML
+	void onLogin(ActionEvent event) {
+		try {
+			Scene parentScene = ((Node) event.getSource()).getScene();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
+			Pane root = loader.load();
+			Scene scene = new Scene(root);
+			Window parentStage = parentScene.getWindow();
+			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.setScene(scene);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Login Page");
+
+			LoginController controller = loader.<LoginController>getController();
+			controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
+			stage.showAndWait();
+
+			User loggedUser = controller.getLoggedUsr();
+			if (loggedUser != null) {
+				setUsr(loggedUser);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@FXML
 	void onExit(ActionEvent event) {
 		System.exit(0);
 	}
 
+	@FXML
+	void onLoad(ActionEvent event) throws IOException {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Choose Article file");
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Article files (*.news)", "*.news");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show open file dialog
+		File file = fileChooser.showOpenDialog(new Stage());
+		if (file == null) {
+			return;
+		}
+
+		try {
+			Article article = JsonArticle.jsonToArticle(JsonArticle.readFile(file.getAbsolutePath()));
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			Scene articleScene = new Scene(loader.load());
+			ArticleEditController controller = loader.<ArticleEditController>getController();
+			controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+			controller.setArticle(article);
+			controller.setUsr(usr);
+			stage.setScene(articleScene);
+			stage.setTitle("New article page");
+
+		} catch (ErrorMalFormedArticle ex) {
+			ex.printStackTrace();
+		}
+	}
 }

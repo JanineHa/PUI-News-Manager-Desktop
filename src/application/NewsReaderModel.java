@@ -23,6 +23,8 @@ import serverConection.exceptions.ServerCommunicationError;
  * This class provides the services needed for NewsReader controller
  * 
  * @author Ã�ngelLucas
+ * * Manon Epplée
+ * Janine Haschke
  *
  */
 class NewsReaderModel {
@@ -69,7 +71,7 @@ class NewsReaderModel {
 	 * @return an observable list with the categories
 	 */
 	ObservableList<Categories> getCategories() {
-		
+	
 		return categories;
 	}
 

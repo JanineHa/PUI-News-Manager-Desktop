@@ -13,10 +13,21 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import application.news.User;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import serverConection.ConnectionManager;
 
 public class LoginController {
 //TODO Add all attribute and methods as needed 
 	private LoginModel loginModel = new LoginModel();
+
 	@FXML
 	private TextField UserId;
 	@FXML
@@ -33,17 +44,27 @@ public class LoginController {
 	@FXML
 	private Text ErrorMsg;
 
+	private NewsReaderModel newsReaderModel = new NewsReaderModel();
+
+	private String user;
+	private String password;
+
 	@FXML
-	void cancel(ActionEvent event) {
-		System.out.println("cancel");
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.close();
-	}
+	private Button btnLogin;
+	@FXML
+	private Button btnCancel;
+	@FXML
+	private Text loginError;
+	@FXML
+	private TextField usernameField;
+	@FXML
+	private TextField passwordField;
 
 	public LoginController() {
 
 		// Uncomment next sentence to use data from server instead dummy data
 		loginModel.setDummyData(false);
+
 	}
 
 	User getLoggedUsr() {
@@ -57,29 +78,31 @@ public class LoginController {
 
 	@FXML
 	void initialize() {
-		//System.out.println("successss");
-		//assert LoginBtn != null : "";
+		assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'Login.fxml'.";
 	}
 
-	// Login Functionality
 	@FXML
-	void LoginAction(ActionEvent event) {
-		// System.out.println("success123");
-		UserId_string = UserId.getText().toString();
-		Passwd_string = Passwd.getText().toString();
-		// System.out.println("success456");
-		// System.out.println(UserId_string+" "+ Passwd_string);
-		// loginModel.setConnectionManager(this.NewsReaderModel.getConnectionManger() );
-		User User_Variable = loginModel.validateUser(UserId_string, Passwd_string);
-		// System.out.println("success2");
-		if (User_Variable != null) {
-			// System.out.println("success");
-			loggedUsr = User_Variable; // Set Variable after validation
-			// Change to NewsReader
+	void onLogin(ActionEvent event) {
+		user = usernameField.getText().toString();
+		password = passwordField.getText().toString();
+
+		User usr = loginModel.validateUser(user, password);
+		if (usr == null) {
+			System.out.print("Login Error");
+			loginError.setText("Login error! Incorrect user or password!");
+		} else {
+			loggedUsr = usr;
+
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.close();
-		} else {
-			ErrorMsg.setText("Incorrect ID Password : Please try again");
 		}
+
+	}
+
+	@FXML
+	void onCancel(ActionEvent event) {
+		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		primaryStage.close();
+
 	}
 }
