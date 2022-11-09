@@ -49,7 +49,7 @@
       <WebView fx:id="articleAbstract" layoutX="35.0" layoutY="289.0" prefHeight="130.0" prefWidth="300.0" />
       <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="428.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="35.0">
          <children>
-            <JFXButton fx:id="btnDetails" buttonType="RAISED" onAction="#onOpenDetails" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="read more">
+            <JFXButton fx:id="btnDetails" buttonType="RAISED" onAction="#onOpenDetails" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Read more" textFill="WHITE">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -66,7 +66,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Login">
+            <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" prefWidth="100.0" style="-fx-background-color: #2b654f;" text="Login" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -82,30 +82,50 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+<<<<<<< HEAD
                   <JFXButton fx:id="btnLoad" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Load From File" GridPane.rowIndex="1">
+=======
+                  <JFXButton fx:id="btnLoad" buttonType="RAISED" onAction="#onLoad" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Load From File" GridPane.rowIndex="1">
+>>>>>>> file-loading
                      <font>
                         <Font size="10.0" />
                      </font>
                   </JFXButton>
+<<<<<<< HEAD
                   <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#onDelete" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <JFXButton fx:id="btnEdit" buttonType="RAISED" onAction="#onEdit" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Edit" GridPane.columnIndex="1">
+=======
+                  <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#onDelete" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Delete Article" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="btnEdit" buttonType="RAISED" onAction="#onEdit" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Edit Article" GridPane.columnIndex="1">
+>>>>>>> file-loading
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
                   </JFXButton>
+<<<<<<< HEAD
                   <JFXButton fx:id="btnNew" buttonType="RAISED" onAction="#onNew" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="New">
+=======
+                  <JFXButton fx:id="btnNew" buttonType="RAISED" maxHeight="25.0" minHeight="25.0" onAction="#onNew" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Create new article">
+>>>>>>> file-loading
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="10.0" />
+                     </font>
                   </JFXButton>
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </GridPane>
+<<<<<<< HEAD
             <JFXButton fx:id="btnExit" buttonType="RAISED" onAction="#onExit" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Exit" />
+=======
+            <JFXButton fx:id="btnExit" buttonType="RAISED" onAction="#onExit" prefWidth="100.0" style="-fx-background-color: #2b654f;" text="Exit" textFill="WHITE" />
+>>>>>>> file-loading
          </children>
       </VBox>
-      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="170.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="130.0" />
+      <ImageView fx:id="imageView" accessibleHelp="Pick an image" accessibleText="NO IMAGE" fitHeight="150.0" fitWidth="170.0" layoutX="35.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="130.0" />
    </children>
 </AnchorPane>

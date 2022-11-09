@@ -1,4 +1,8 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+=======
+encoding//src/application/AppScenes.java=UTF-8
+>>>>>>> file-loading
 encoding//src/application/ArticleEditController.java=UTF-8
 encoding//src/application/NewsReaderModel.java=UTF-8
 encoding/<project>=windows-1252
