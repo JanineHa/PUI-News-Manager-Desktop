@@ -286,19 +286,16 @@ public class ArticleEditController {
 	@FXML
 	public void switchText(ActionEvent event) {
 		if (showBody) {
-		this.showBody = false;
+			this.showBody = false;
 			this.textEditor.setText(this.editingArticle.getAbstractText());
 			this.htmlEditor.setHtmlText(this.editingArticle.getAbstractText());
 			this.btnText.setText("Show body");
-			System.out.println("1    textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
-			return;
 		} else {
 			this.showBody = true;
 			this.textEditor.setText(this.editingArticle.getBodyText());
 			this.htmlEditor.setHtmlText(this.editingArticle.getBodyText());
 			this.btnText.setText("Show abstract");
-			System.out.println("2   textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
-	}
+		}
 	}
 
 	@FXML
@@ -307,13 +304,10 @@ public class ArticleEditController {
 			this.textEditor.setVisible(true);
 			this.htmlEditor.setVisible(false);
 			this.btnEditor.setText("Show HTML editor");
-			System.out.println("5   textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
-
 		} else {
 			this.textEditor.setVisible(false);
 			this.htmlEditor.setVisible(true);
 			this.btnEditor.setText("Show text editor");
-			System.out.println("6  textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
 		}
 	}
 
