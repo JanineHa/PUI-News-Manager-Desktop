@@ -92,8 +92,6 @@ public class NewsReaderController {
 		// The method newsReaderModel.retrieveData() can be used to retrieve data
 
 		newsReaderModel.retrieveData();
-		categorieList.getItems().addAll(newsReaderModel.getCategories());
-		categorieList.getSelectionModel().selectFirst();
 
 		filteredArticleList = new FilteredList<>(newsReaderModel.getArticles(), article -> true);
 		this.articleListView.setItems(filteredArticleList);
@@ -138,6 +136,8 @@ public class NewsReaderController {
 	void setConnectionManager(ConnectionManager connection) {
 		this.newsReaderModel.setDummyData(false); // System is connected so dummy data are not needed
 		this.newsReaderModel.setConnectionManager(connection);
+		categorieList.getItems().addAll(newsReaderModel.getCategories());
+		categorieList.getSelectionModel().selectFirst();
 		this.getData();
 	}
 
