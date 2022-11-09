@@ -81,12 +81,12 @@
                   <Insets right="50.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnEditor" buttonType="RAISED" onAction="#switchEditor" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="Show html">
+            <JFXButton fx:id="btnEditor" buttonType="RAISED" onAction="#switchEditor" prefWidth="80.0" style="-fx-background-color: lightgrey;" text="Show HTML editor">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show body">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show abstract">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

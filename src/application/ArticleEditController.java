@@ -12,8 +12,6 @@ import application.news.Article;
 import application.news.Categories;
 import application.news.User;
 import application.utils.JsonArticle;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +29,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -80,7 +77,7 @@ public class ArticleEditController {
 	private TextArea textEditor;
 
 	private Boolean showBody;
-	private Boolean showHTML;
+
 	@FXML
 	private Button btnText;
 	@FXML
@@ -91,8 +88,8 @@ public class ArticleEditController {
 	@FXML
 	void initialize() {
 		this.showBody = true;
-		this.showHTML = true;
-
+		this.textEditor.setVisible(true);
+		this.htmlEditor.setVisible(false);
 	}
 
 	@FXML
@@ -262,8 +259,7 @@ public class ArticleEditController {
 			this.subtitle.setText(article.getSubtitle());
 			this.category.setText(article.getCategory());
 
-			this.textEditor.setText(article.getAbstractText());
-			this.htmlEditor.setHtmlText(article.getAbstractText());
+			this.textEditor.setText(article.getBodyText());
 			this.htmlEditor.setHtmlText(article.getBodyText());
 		}
 
@@ -289,48 +285,35 @@ public class ArticleEditController {
 
 	@FXML
 	public void switchText(ActionEvent event) {
-		if (this.textEditor.isVisible()) {
-			if (showBody) {
-				this.showBody = false;
-				this.textEditor.setText(this.editingArticle.getBodyText());
-				this.btnText.setText("Show abstract");
-				return;
-			} else {
-				this.showBody = true;
-				this.textEditor.setText(this.editingArticle.getAbstractText());
-				this.btnText.setText("Show body");
-			}
-
-		} else if (this.htmlEditor.isVisible()) {
-			if (showBody) {
-				this.showBody = false;
-				this.htmlEditor.setHtmlText(this.editingArticle.getBodyText());
-				this.btnText.setText("Show abstract");
-				return;
-			} else {
-				this.showBody = true;
-				this.htmlEditor.setHtmlText(this.editingArticle.getAbstractText());
-				this.btnText.setText("Show body");
-			}
-
-		} else {
+		if (showBody) {
+		this.showBody = false;
+			this.textEditor.setText(this.editingArticle.getAbstractText());
+			this.htmlEditor.setHtmlText(this.editingArticle.getAbstractText());
+			this.btnText.setText("Show body");
+			System.out.println("1    textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
 			return;
-		}
+		} else {
+			this.showBody = true;
+			this.textEditor.setText(this.editingArticle.getBodyText());
+			this.htmlEditor.setHtmlText(this.editingArticle.getBodyText());
+			this.btnText.setText("Show abstract");
+			System.out.println("2   textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
+	}
 	}
 
 	@FXML
 	public void switchEditor(ActionEvent event) {
-		if (showHTML) {
-			this.showHTML = false;
-			this.textEditor.setVisible(false);
-			this.htmlEditor.setVisible(true);
-			this.btnEditor.setText("Show Text");
-
-		} else {
-			this.showHTML = true;
+		if (htmlEditor.isVisible()) {
 			this.textEditor.setVisible(true);
 			this.htmlEditor.setVisible(false);
-			this.btnEditor.setText("Show HTML");
+			this.btnEditor.setText("Show HTML editor");
+			System.out.println("5   textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
+
+		} else {
+			this.textEditor.setVisible(false);
+			this.htmlEditor.setVisible(true);
+			this.btnEditor.setText("Show text editor");
+			System.out.println("6  textEditor: " + this.textEditor.isVisible() + "    htmlEditor: " + this.htmlEditor.isVisible() + "   showBody: " + this.showBody);
 		}
 	}
 
