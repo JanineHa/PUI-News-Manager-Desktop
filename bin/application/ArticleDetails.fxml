@@ -49,7 +49,7 @@
                   <Insets right="150.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show body">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show abstract">
                <HBox.margin>
                   <Insets left="150.0" />
                </HBox.margin>
