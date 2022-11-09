@@ -168,9 +168,13 @@ public class NewsReaderController {
 					articleAbstract.getEngine().loadContent(Article.getAbstractText());
 					imageView.setImage(Article.getImageData());
 					Article.setIdArticle(newValue.getIdArticle());
-
-				} else { // Nothing selected
-
+					if (usr != null && !(Article.getIdUser() == usr.getIdUser())) {
+						btnDelete.setVisible(false);
+						btnEdit.setVisible(false);
+					} else if (usr != null && (Article.getIdUser() == usr.getIdUser())) {
+						btnDelete.setVisible(true);
+						btnEdit.setVisible(true);
+					}
 				}
 			}
 
