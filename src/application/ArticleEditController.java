@@ -135,9 +135,18 @@ public class ArticleEditController {
 
 	@FXML
 	public void onSend(ActionEvent event) {
-		if (this.sendBack()) {
-			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			stage.close();
+		if(this.sendBack()) {
+			try{
+				Stage primaryStage= (Stage) ((Node) event.getSource()).getScene().getWindow();
+				FXMLLoader loader= new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
+				Scene articleScene= new Scene(loader.load());
+				NewsReaderController controller= loader.<NewsReaderController>getController();
+				controller.setConnectionManager(this.connection);
+				controller.setUsr(this.usr);
+				primaryStage.setScene(articleScene);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return;
 
