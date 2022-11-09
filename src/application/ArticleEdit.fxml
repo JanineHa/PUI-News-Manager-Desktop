@@ -49,7 +49,7 @@
                      <HBox.margin>
                         <Insets right="13.0" />
                      </HBox.margin></Label>
-                  <MenuButton fx:id="category" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" text="Category">
+                  <MenuButton fx:id="category" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" text="ALL">
 		              <items>
 		                <MenuItem mnemonicParsing="false" onAction="#selectAll" text="All" />
 		                <MenuItem mnemonicParsing="false" onAction="#selectNational" text="National" />
@@ -62,9 +62,11 @@
             </HBox>
          </children>
       </VBox>
-      <HTMLEditor fx:id="htmlEditor" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
-        <TextArea fx:id="textEditor" layoutX="31.0" layoutY="181.0" prefHeight="200.0" prefWidth="530.0" visible="true" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
-      <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
+        <HTMLEditor fx:id="htmlEditorBody" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+        <HTMLEditor fx:id="htmlEditorAbstract" layoutX="9.0" layoutY="166.0" prefHeight="200.0" prefWidth="530.0" style="-fx-border-color: #000; -fx-border-radius: 8px;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+       <TextArea fx:id="textEditorBody" layoutX="31.0" layoutY="181.0" prefHeight="200.0" prefWidth="530.0" visible="true" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+       <TextArea fx:id="textEditorAbstract" layoutX="31.0" layoutY="181.0" prefHeight="200.0" prefWidth="530.0" visible="true" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
+      <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="360.0">
          <children>
             <JFXButton buttonType="RAISED" onAction="#goBack" prefHeight="26.0" prefWidth="56.0" style="-fx-background-color: #2b654f;" text="Back" textFill="WHITE">
                <HBox.margin>
@@ -78,15 +80,15 @@
             </JFXButton>
             <JFXButton fx:id="btnWrite" buttonType="RAISED" onAction="#onWrite" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Save to file" textFill="WHITE">
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="25.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnEditor" buttonType="RAISED" onAction="#switchEditor" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: lightgrey;" text="Show HTML editor" textAlignment="CENTER">
+            <JFXButton fx:id="btnEditor" buttonType="RAISED" onAction="#switchEditor" prefHeight="26.0" prefWidth="121.0" style="-fx-background-color: lightgrey;" text="HTML/Text editor" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets right="15.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="100.0" style="-fx-background-color: lightgrey;" text="Show abstract">
+            <JFXButton fx:id="btnText" buttonType="RAISED" onAction="#switchText" prefWidth="125.0" style="-fx-background-color: lightgrey;" text="Show body/abstract">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

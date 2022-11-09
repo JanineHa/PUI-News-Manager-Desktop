@@ -41,7 +41,7 @@
             </HBox>
          </children>
       </VBox>
-      <JFXTextArea fx:id="text" editable="false" layoutX="27.0" layoutY="190.0" prefHeight="140.0" prefWidth="480.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <JFXTextArea fx:id="text" editable="false" layoutX="27.0" layoutY="190.0" prefHeight="140.0" prefWidth="480.0" unFocusColor="#0c4b2c" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <HBox alignment="CENTER" layoutX="7.0" layoutY="346.0" prefHeight="30.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.topAnchor="360.0">
          <children>
             <JFXButton buttonType="RAISED" onAction="#goBack" prefWidth="80.0" style="-fx-background-color: #2b654f;" text="Back" textFill="WHITE">

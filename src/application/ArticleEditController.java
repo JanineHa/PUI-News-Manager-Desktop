@@ -72,9 +72,13 @@ public class ArticleEditController {
 	@FXML
 	private ImageView image;
 	@FXML
-	private HTMLEditor htmlEditor;
+	private HTMLEditor htmlEditorAbstract;
 	@FXML
-	private TextArea textEditor;
+	private HTMLEditor htmlEditorBody;
+	@FXML
+	private TextArea textEditorAbstract;
+	@FXML
+	private TextArea textEditorBody;
 
 	private Boolean showBody;
 
@@ -86,12 +90,16 @@ public class ArticleEditController {
 	private Button btnEditor;
 	@FXML
 	private Button btnWrite;
+	String textAbstract = null;
+	String textBody = null;
 
 	@FXML
 	void initialize() {
 		this.showBody = true;
-		this.textEditor.setVisible(true);
-		this.htmlEditor.setVisible(false);
+		this.textEditorBody.setVisible(true);
+		this.textEditorAbstract.setVisible(false);
+		this.htmlEditorBody.setVisible(false);
+		this.htmlEditorAbstract.setVisible(false);
 
 	}
 
@@ -163,16 +171,17 @@ public class ArticleEditController {
 		}
 
 		// TODO prepare and send using connection.saveArticle( ...)
-		String textAbstract = null;
-		String textBody = null;
 		Article article = new Article();
 
-		if (this.textEditor.isVisible()) {
-			textAbstract = this.textEditor.getText();
-			textBody = this.textEditor.getText();
+		if (textEditorAbstract.isVisible()) {
+			textAbstract = this.textEditorAbstract.getText();
 		} else {
-			textAbstract = this.htmlEditor.getHtmlText();
-			textBody = this.htmlEditor.getHtmlText();
+			textAbstract = this.htmlEditorAbstract.getHtmlText();
+		}
+		if (textEditorBody.isVisible()) {
+			textBody = this.textEditorBody.getText();
+		} else {
+			textBody = this.htmlEditorBody.getHtmlText();
 		}
 
 		this.editingArticle.titleProperty().set(textTitle);
@@ -251,11 +260,15 @@ public class ArticleEditController {
 			this.subtitle.setText(article.getSubtitle());
 			this.category.setText(article.getCategory());
 			this.image.setImage(article.getImageData());
+			this.textAbstract = article.getAbstractText();
+			this.textBody = article.getBodyText();
+			this.textEditorBody.setText(textBody);
+			this.htmlEditorBody.setHtmlText(textBody);
+			this.textEditorAbstract.setText(textAbstract);
+			this.htmlEditorAbstract.setHtmlText(textAbstract);
 
-			this.textEditor.setText(article.getBodyText());
-			this.htmlEditor.setHtmlText(article.getBodyText());
 		}
-		this.category.setText("ALL");
+
 	}
 
 	/**
@@ -268,26 +281,28 @@ public class ArticleEditController {
 
 		String textTitle = this.title.getText();
 		Categories choosenCategory = Categories.valueOf(this.category.getText().toUpperCase());
-	
-		if (textTitle == null ||  textTitle.equals("") ) {
+
+		if (textTitle == null || textTitle.equals("")) {
 			Alert alert = new Alert(AlertType.INFORMATION, "Enter a title to save the article.");
 			alert.showAndWait();
 			return false;
 		}
-		if ( choosenCategory == null ||  choosenCategory == Categories.ALL) {
-				Alert alert2 = new Alert(AlertType.INFORMATION, "Choose a category different from ALL.");
-				alert2.showAndWait();
-				return false;
-					
+		if (choosenCategory == null || choosenCategory == Categories.ALL) {
+			Alert alert2 = new Alert(AlertType.INFORMATION, "Choose a category different from ALL.");
+			alert2.showAndWait();
+			return false;
+
 		} else {
-			String textAbstract;
-			String textBody;
-			if (this.textEditor.isVisible()) {
-				textAbstract = this.textEditor.getText();
-				textBody = this.textEditor.getText();
+
+			if (textEditorAbstract.isVisible()) {
+				textAbstract = this.textEditorAbstract.getText();
 			} else {
-				textAbstract = this.htmlEditor.getHtmlText();
-				textBody = this.htmlEditor.getHtmlText();
+				textAbstract = this.htmlEditorAbstract.getHtmlText();
+			}
+			if (textEditorBody.isVisible()) {
+				textBody = this.textEditorBody.getText();
+			} else {
+				textBody = this.htmlEditorBody.getHtmlText();
 			}
 
 			this.editingArticle.titleProperty().set(textTitle);
@@ -313,29 +328,54 @@ public class ArticleEditController {
 
 	@FXML
 	public void switchText(ActionEvent event) {
-		if (showBody) {
-			this.showBody = false;
-			this.textEditor.setText(this.editingArticle.getAbstractText());
-			this.htmlEditor.setHtmlText(this.editingArticle.getAbstractText());
-			this.btnText.setText("Show body");
-		} else {
-			this.showBody = true;
-			this.textEditor.setText(this.editingArticle.getBodyText());
-			this.htmlEditor.setHtmlText(this.editingArticle.getBodyText());
-			this.btnText.setText("Show abstract");
+		if (htmlEditorAbstract.isVisible()) {
+			this.htmlEditorBody.setVisible(true);
+			this.htmlEditorAbstract.setVisible(false);
+
+			this.textEditorAbstract.setText(this.htmlEditorAbstract.getHtmlText());
+
+		} else if (htmlEditorBody.isVisible()) {
+
+			this.htmlEditorAbstract.setVisible(true);
+			this.htmlEditorBody.setVisible(false);
+			this.textEditorBody.setText(this.htmlEditorBody.getHtmlText());
+
+		} else if (textEditorAbstract.isVisible()) {
+			this.textEditorBody.setVisible(true);
+			this.textEditorAbstract.setVisible(false);
+
+			this.htmlEditorAbstract.setHtmlText(this.textEditorAbstract.getText());
+
+		} else if (textEditorBody.isVisible()) {
+			this.textEditorAbstract.setVisible(true);
+			this.textEditorBody.setVisible(false);
+
+			this.htmlEditorBody.setHtmlText(this.textEditorBody.getText());
 		}
 	}
 
 	@FXML
 	public void switchEditor(ActionEvent event) {
-		if (htmlEditor.isVisible()) {
-			this.textEditor.setVisible(true);
-			this.htmlEditor.setVisible(false);
-			this.btnEditor.setText("Show HTML editor");
-		} else {
-			this.textEditor.setVisible(false);
-			this.htmlEditor.setVisible(true);
-			this.btnEditor.setText("Show text editor");
+		if (htmlEditorAbstract.isVisible()) {
+			this.textEditorAbstract.setVisible(true);
+			this.htmlEditorAbstract.setVisible(false);
+			this.textEditorAbstract.setText(this.htmlEditorAbstract.getHtmlText());
+
+		} else if (htmlEditorBody.isVisible()) {
+			this.textEditorBody.setVisible(true);
+			this.htmlEditorBody.setVisible(false);
+			this.textEditorBody.setText(this.htmlEditorBody.getHtmlText());
+
+		} else if (textEditorAbstract.isVisible()) {
+			this.htmlEditorAbstract.setVisible(true);
+			this.textEditorAbstract.setVisible(false);
+			this.htmlEditorAbstract.setHtmlText(this.textEditorAbstract.getText());
+
+		} else if (textEditorBody.isVisible()) {
+			this.htmlEditorBody.setVisible(true);
+			this.textEditorBody.setVisible(false);
+			this.htmlEditorBody.setHtmlText(this.textEditorBody.getText());
+
 		}
 	}
 
