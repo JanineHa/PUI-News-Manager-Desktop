@@ -271,6 +271,7 @@ public class NewsReaderController {
 			stage.initOwner(parentStage);
 			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
+			stage.setTitle("Login Page");
 
 			LoginController controller = loader.<LoginController>getController();
 			controller.setConnectionManager(this.newsReaderModel.getConnectionManager());
